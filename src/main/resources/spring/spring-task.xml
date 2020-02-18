@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task" xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/task 
+     http://www.springframework.org/schema/task/spring-task.xsd">
+	<task:scheduled-tasks>
+		<!-- 下面两个 配置 有点类似于Timer的功能  -->
+		<!-- fixed-delay:上一个任务完成开始到下一个任务开始的间隔,单位是毫秒。 -->
+		<!-- fixed-rate:开始到下一个任务开始的间隔,单位是毫秒 -->
+		<!--##### 定时每天执行任务开始##### -->
+		<!-- 0 0 0 * * ? 每天 凌晨 0 点 0 分0 秒 执行 -->
+		<!--  <task:scheduled ref="jobTaskImpl" method="autoJob" cron="0 34 9 * * ?" />-->
+		<!--##### 定时每月执行任务开始##### -->
+		<!-- 0 0 0 1 * ? 每月一号 凌晨 0 点 0 分0 秒 执行 -->
+		<!-- <task:scheduled ref="taskJobServiceImpl" method="autoMonthFirstJob" cron="0 0 0 1 * ?" /> -->
+	</task:scheduled-tasks>
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 包装任务调度Bean -->
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 定义目标Bean -->
+		<property name="targetObject" ref="jobTaskImpl" />
+		<!-- 定义目标Bean中的方法 -->
+		<property name="targetMethod" value="autoJob" />
+		<!-- false,证明不执行并发任务 -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 定义任务调度的触发器 -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 确定任务调度的目标任务 -->
+		<property name="jobDetail" ref="jobDetail" />
+		<!-- 每周周一至周五中午12:00执行 -->
+		<!-- 表达式    秒  分  小时 天  月  周 年(可选)  -->
+		<!-- 0 0 0 12 ? * MON-FRI -->
+		<property name="cronExpression" value="25 0/1 * * * ?" />
+	</bean>
+	<!-- 建立实际调度 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 指定调度使用的触发器列表 -->
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+				<!-- 此处可以书写多个触发器 -->
+				<!-- <ref bean=""/> -->
+			</list>
+		</property>
+	</bean>
+
+</beans>
